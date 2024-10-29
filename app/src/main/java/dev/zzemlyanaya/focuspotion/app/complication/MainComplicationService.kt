@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.complication
+package dev.zzemlyanaya.focuspotion.app.complication
 
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -8,9 +8,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import java.util.Calendar
 
-/**
- * Skeleton for complication data source that returns short text.
- */
+
 class MainComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {

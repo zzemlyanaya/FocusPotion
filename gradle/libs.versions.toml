@@ -11,6 +11,7 @@ composeFoundation       = "1.4.0"
 activityCompose         = "1.9.3"
 composeUi               = "1.7.4"
 
+watchface               = "1.2.1"
 tiles                   = "1.4.1"
 tilesMaterial           = "1.4.1"
 wearToolingPreview      = "1.0.0"
@@ -33,6 +34,9 @@ compose-material                    = { group = "androidx.wear.compose", name = 
 compose-foundation                  = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
 compose-navigation                  = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "composeFoundation" }
 
+complications                       = { group = "androidx.wear.watchface", name = "watchface-complications-data", version.ref = "watchface" }
+datasource-ktx                      = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchface" }
+
 tiles                               = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
 tiles-material                      = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tilesMaterial" }
 
@@ -42,7 +46,7 @@ horologist-tiles                    = { group = "com.google.android.horologist",
 [bundles]
 androidx                            = ["activity-compose", "splashcreen"]
 compose                             = ["ui", "ui-tooling", "ui-tooling-preview", "compose-material", "compose-foundation", "compose-navigation"]
-wear                                = ["wear-tooling-preview", "tiles", "tiles-material"]
+wear                                = ["wear-tooling-preview", "complications", "datasource-ktx", "tiles", "tiles-material"]
 horologist                          = ["horologist-compose-tools", "horologist-tiles"]
 
 [plugins]

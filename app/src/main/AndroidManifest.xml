@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <service
-            android:name=".complication.MainComplicationService"
+            android:name="dev.zzemlyanaya.focuspotion.app.complication.MainComplicationService"
             android:exported="true"
             android:label="@string/complication_label"
             android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
@@ -28,7 +28,7 @@
                 android:value="0" />
         </service>
         <service
-            android:name=".tile.MainTileService"
+            android:name="dev.zzemlyanaya.focuspotion.app.tile.MainTileService"
             android:exported="true"
             android:label="@string/tile_label"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
@@ -50,7 +50,7 @@
             android:value="true" />
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".app.MainActivity"
             android:exported="true"
             android:taskAffinity=""
             android:theme="@style/MainActivityTheme.Starting">

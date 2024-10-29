@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.presentation
+package dev.zzemlyanaya.focuspotion.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,7 +19,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.tooling.preview.devices.WearDevices
 import dev.zzemlyanaya.focuspotion.R
-import dev.zzemlyanaya.focuspotion.presentation.theme.FocusPotionTheme
+import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
