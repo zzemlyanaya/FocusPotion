@@ -1,0 +1,51 @@
+[versions]
+agp                     = "8.6.1"
+kotlin                  = "1.9.22"
+playServicesWearable    = "18.2.0"
+
+splashscreen            = "1.0.1"
+
+composeBom              = "2024.10.00"
+composeMaterial         = "1.4.0"
+composeFoundation       = "1.4.0"
+activityCompose         = "1.9.3"
+composeUi               = "1.7.4"
+
+tiles                   = "1.4.1"
+tilesMaterial           = "1.4.1"
+wearToolingPreview      = "1.0.0"
+horologistTiles         = "0.6.9"
+horologistComposeTools  = "0.6.9"
+
+[libraries]
+play-services-wearable              = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
+
+activity-compose                    = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+splashcreen                         = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+
+compose-bom                         = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+ui                                  = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
+ui-tooling-preview                  = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
+ui-tooling                          = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeUi" }
+
+wear-tooling-preview                = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
+compose-material                    = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+compose-foundation                  = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
+compose-navigation                  = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "composeFoundation" }
+
+tiles                               = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
+tiles-material                      = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tilesMaterial" }
+
+horologist-compose-tools            = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
+horologist-tiles                    = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
+
+[bundles]
+androidx                            = ["activity-compose", "splashcreen"]
+compose                             = ["ui", "ui-tooling", "ui-tooling-preview", "compose-material", "compose-foundation", "compose-navigation"]
+wear                                = ["wear-tooling-preview", "tiles", "tiles-material"]
+horologist                          = ["horologist-compose-tools", "horologist-tiles"]
+
+[plugins]
+android-application                 = { id = "com.android.application", version.ref = "agp" }
+kotlin-android                      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
