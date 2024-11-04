@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.app.tile
+package dev.zzemlyanaya.focuspotion.features.tile
 
 import android.content.Context
 import androidx.compose.runtime.Composable

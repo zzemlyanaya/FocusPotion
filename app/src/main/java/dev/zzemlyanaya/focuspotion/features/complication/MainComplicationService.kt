@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.app.complication
+package dev.zzemlyanaya.focuspotion.features.complication
 
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType

@@ -1,15 +1,19 @@
 [versions]
 agp                     = "8.6.1"
-kotlin                  = "1.9.22"
+kotlin                  = "2.0.21"
+ksp                     = "2.0.21-1.0.26"
 playServicesWearable    = "18.2.0"
+hilt                    = "2.51.1"
+hiltNavigation          = "1.2.0"
 
 splashscreen            = "1.0.1"
 
-composeBom              = "2024.10.00"
+composeBom              = "2024.10.01"
 composeMaterial         = "1.4.0"
-composeFoundation       = "1.4.0"
+composeWear             = "1.4.0"
 activityCompose         = "1.9.3"
-composeUi               = "1.7.4"
+composeUi               = "1.7.5"
+lifecycle               = "2.8.7"
 
 watchface               = "1.2.1"
 tiles                   = "1.4.1"
@@ -23,16 +27,18 @@ play-services-wearable              = { group = "com.google.android.gms", name =
 
 activity-compose                    = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 splashcreen                         = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+lifecycle-compose                   = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 compose-bom                         = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+material-icons                      = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "composeUi" }
 ui                                  = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
 ui-tooling-preview                  = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
 ui-tooling                          = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeUi" }
 
 wear-tooling-preview                = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
 compose-material                    = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
-compose-foundation                  = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
-compose-navigation                  = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "composeFoundation" }
+compose-foundation                  = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeWear" }
+compose-navigation                  = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "composeWear" }
 
 complications                       = { group = "androidx.wear.watchface", name = "watchface-complications-data", version.ref = "watchface" }
 datasource-ktx                      = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchface" }
@@ -43,13 +49,27 @@ tiles-material                      = { group = "androidx.wear.tiles", name = "t
 horologist-compose-tools            = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
 horologist-tiles                    = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
 
+datastore                           = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.1" }
+
+serialization-json                  = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.7.3" }
+
+hilt                                = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler                       = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose             = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
+
+
 [bundles]
-androidx                            = ["activity-compose", "splashcreen"]
-compose                             = ["ui", "ui-tooling", "ui-tooling-preview", "compose-material", "compose-foundation", "compose-navigation"]
+androidx                            = ["activity-compose", "splashcreen", "lifecycle-compose"]
+compose                             = ["ui", "ui-tooling", "ui-tooling-preview", "compose-material", "compose-foundation", "compose-navigation", "material-icons"]
 wear                                = ["wear-tooling-preview", "complications", "datasource-ktx", "tiles", "tiles-material"]
 horologist                          = ["horologist-compose-tools", "horologist-tiles"]
+hilt                                = ["hilt", "hilt-navigation-compose"]
 
 [plugins]
 android-application                 = { id = "com.android.application", version.ref = "agp" }
 kotlin-android                      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler                    = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization                = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp                                 = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt-android                        = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 

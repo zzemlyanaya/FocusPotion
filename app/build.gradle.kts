@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -15,9 +19,18 @@ android {
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -35,7 +48,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         jniLibs {
@@ -56,6 +69,11 @@ dependencies {
     implementation(libs.bundles.horologist)
 
     implementation(libs.play.services.wearable)
+    implementation(libs.datastore)
+    implementation(libs.serialization.json)
+
+    implementation(libs.bundles.hilt)
+    ksp(libs.hilt.compiler)
 
     androidTestImplementation(platform(libs.compose.bom))
     debugImplementation(libs.ui.tooling)
