@@ -1,8 +1,11 @@
 package dev.zzemlyanaya.focuspotion.features.presets.view
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Create
@@ -17,9 +20,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.compose.foundation.ExperimentalWearFoundationApi
+import androidx.wear.compose.foundation.RevealScope
+import androidx.wear.compose.foundation.RevealState
+import androidx.wear.compose.foundation.SwipeToReveal
 import androidx.wear.compose.foundation.lazy.items
+import androidx.wear.compose.foundation.rememberRevealState
 import androidx.wear.compose.material.ChipDefaults
+import androidx.wear.compose.material.ExperimentalWearMaterialApi
+import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.SwipeToRevealDefaults
+import androidx.wear.compose.material.SwipeToRevealPrimaryAction
+import androidx.wear.compose.material.SwipeToRevealSecondaryAction
 import androidx.wear.compose.material.Text
 import androidx.wear.tooling.preview.devices.WearDevices
 import com.google.android.horologist.compose.layout.ScalingLazyColumn
@@ -91,7 +104,7 @@ private fun PresetsListScreen(
                 }
             } else {
                 items(uiState.presets) {
-                    PresetCard(it) { name -> sendIntent(PresetsListContract.Intent.PresetClick(name)) }
+                    PresetCard(it, sendIntent)
                 }
             }
 
@@ -107,16 +120,86 @@ private fun PresetsListScreen(
 }
 
 
+@OptIn(ExperimentalWearFoundationApi::class)
 @Composable
 private fun PresetCard(
     presetUiModel: PresetUiModel,
-    onClick: (String) -> Unit
+    sendIntent: (BaseIntent) -> Unit
 ) {
-    Chip(
-        label = presetUiModel.name,
-        onClick = { onClick(presetUiModel.name) },
-        icon = presetUiModel.icon.asPaintable(),
-        colors = ChipDefaults.secondaryChipColors(iconColor = MaterialTheme.colors.primary)
+    val revealState = rememberRevealState()
+
+    SwipeToReveal(
+        state = revealState,
+        modifier = Modifier.fillMaxWidth(),
+        primaryAction = {
+            DeleteAction(
+                revealState,
+                presetUiModel
+            ) { sendIntent.invoke(PresetsListContract.Intent.PresetDeleteClick(it)) }
+        },
+        secondaryAction = {
+            EditAction(
+                revealState,
+                presetUiModel
+            ) { sendIntent.invoke(PresetsListContract.Intent.PresetEditClick(it)) }
+        },
+        undoAction = { UndoDelete { sendIntent.invoke(PresetsListContract.Intent.UndoDeleteClick) } },
+        onFullSwipe = { sendIntent.invoke(PresetsListContract.Intent.PresetDeleteClick(presetUiModel.name)) }
+    ) {
+        Chip(
+            label = presetUiModel.name,
+            onClick = { sendIntent.invoke(PresetsListContract.Intent.PresetClick(presetUiModel.name)) },
+            icon = presetUiModel.icon.asPaintable(),
+            colors = ChipDefaults.secondaryChipColors(iconColor = MaterialTheme.colors.primary)
+        )
+    }
+}
+
+@OptIn(ExperimentalWearFoundationApi::class, ExperimentalWearMaterialApi::class)
+@Composable
+private fun RevealScope.DeleteAction(
+    revealState: RevealState,
+    presetUiModel: PresetUiModel,
+    onDelete: (String) -> Unit
+) {
+    SwipeToRevealPrimaryAction(
+        modifier = Modifier.background(MaterialTheme.colors.error, CircleShape),
+        revealState = revealState,
+        icon = { Icon(SwipeToRevealDefaults.Delete, SwipeToRevealDefaults.Delete.name, tint = MaterialTheme.colors.onError) },
+        label = { Text(stringResource(R.string.btn_delete), color = MaterialTheme.colors.onError) },
+        onClick = { onDelete(presetUiModel.name) }
+    )
+}
+
+@OptIn(ExperimentalWearFoundationApi::class, ExperimentalWearMaterialApi::class)
+@Composable
+private fun RevealScope.EditAction(
+    revealState: RevealState,
+    presetUiModel: PresetUiModel,
+    onEdit: (String) -> Unit
+) {
+    SwipeToRevealSecondaryAction(
+        modifier = Modifier.background(MaterialTheme.colors.surface, CircleShape),
+        revealState = revealState,
+        onClick = { onEdit(presetUiModel.name) },
+    ) {
+        Icon(Icons.Default.Edit, Icons.Default.Edit.name, tint = MaterialTheme.colors.onSurface)
+    }
+}
+
+@Composable
+private fun UndoDelete(onUndo: () -> Unit) {
+    androidx.wear.compose.material.Chip(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onUndo,
+        colors = ChipDefaults.secondaryChipColors(),
+        label = {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.btn_undo),
+                textAlign = TextAlign.Center
+            )
+        }
     )
 }
 

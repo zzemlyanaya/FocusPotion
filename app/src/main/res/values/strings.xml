@@ -8,6 +8,8 @@
     <string name="no_presets">Nothing\'s here. Create a new potion and start brewing!</string>
 
     <string name="btn_more">More</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_undo">Undo</string>
     <string name="btn_new">New</string>
     <string name="btn_create_new">Create new potion</string>
 

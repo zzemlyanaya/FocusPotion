@@ -14,6 +14,7 @@ sealed interface PresetsListContract {
         class PresetClick(val name: String) : Intent
         class PresetEditClick(val name: String) : Intent
         class PresetDeleteClick(val name: String) : Intent
+        object UndoDeleteClick : Intent
         object CreateNew : Intent
     }
 }

@@ -20,9 +20,9 @@ object MainDirections {
         override val destination = Destination.PresetsList.route
     }
 
-    val presetEdit = object : NavigationCommand() {
+    fun presetEdit(preset: PresetEntity) = object : NavigationCommand() {
         override val destination = Destination.PresetEdit.route
-        override val args = listOf(false)
+        override val args = listOf(false, preset)
     }
 
     val presetNew = object : NavigationCommand() {
