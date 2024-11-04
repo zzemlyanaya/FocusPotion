@@ -19,8 +19,7 @@ watchface               = "1.2.1"
 tiles                   = "1.4.1"
 tilesMaterial           = "1.4.1"
 wearToolingPreview      = "1.0.0"
-horologistTiles         = "0.6.9"
-horologistComposeTools  = "0.6.9"
+horologist              = "0.7.3-alpha"
 
 [libraries]
 play-services-wearable              = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
@@ -46,8 +45,11 @@ datasource-ktx                      = { group = "androidx.wear.watchface", name 
 tiles                               = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
 tiles-material                      = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tilesMaterial" }
 
-horologist-compose-tools            = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
-horologist-tiles                    = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
+horologist-compose-material         = { group = "com.google.android.horologist", name = "horologist-compose-material", version.ref = "horologist" }
+horologist-compose-layout           = { group = "com.google.android.horologist", name = "horologist-compose-layout", version.ref = "horologist" }
+horologist-composables              = { group = "com.google.android.horologist", name = "horologist-composables", version.ref = "horologist" }
+horologist-compose-tools            = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologist" }
+horologist-tiles                    = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologist" }
 
 datastore                           = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.1" }
 
@@ -62,7 +64,7 @@ hilt-navigation-compose             = { group = "androidx.hilt", name = "hilt-na
 androidx                            = ["activity-compose", "splashcreen", "lifecycle-compose"]
 compose                             = ["ui", "ui-tooling", "ui-tooling-preview", "compose-material", "compose-foundation", "compose-navigation", "material-icons"]
 wear                                = ["wear-tooling-preview", "complications", "datasource-ktx", "tiles", "tiles-material"]
-horologist                          = ["horologist-compose-tools", "horologist-tiles"]
+horologist                          = ["horologist-composables", "horologist-compose-layout", "horologist-compose-tools", "horologist-tiles", "horologist-compose-material"]
 hilt                                = ["hilt", "hilt-navigation-compose"]
 
 [plugins]

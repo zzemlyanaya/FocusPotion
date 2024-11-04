@@ -18,13 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.CompactChip
-import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.tooling.preview.devices.WearDevices
+import com.google.android.horologist.compose.material.Button
+import com.google.android.horologist.compose.material.CompactChip
 import dev.zzemlyanaya.focuspotion.R
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.ui.BaseScreen
@@ -52,7 +51,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun MainScreen(
+private fun MainScreen(
     modifier: Modifier = Modifier,
     uiState: MainScreenContract.UiState,
     sendIntent: (BaseIntent) -> Unit,
@@ -73,6 +72,7 @@ internal fun MainScreen(
                     text = stringResource(R.string.no_presets)
                 )
             } else {
+                // TODO consider using FlowRow for this
                 PresetsRow(uiState.firstRow) { sendIntent.invoke(MainScreenContract.Intent.PresetClick(it)) }
 
                 if (uiState.secondRow.isNotEmpty()) {
@@ -83,7 +83,7 @@ internal fun MainScreen(
 
         CompactChip(
             onClick = { sendIntent(MainScreenContract.Intent.CreateNew) },
-            label = { Text(stringResource(R.string.btn_new)) }
+            label = stringResource(R.string.btn_new)
         )
     }
 }
@@ -110,11 +110,11 @@ private fun PresetButton(
     }
 
     Button(
+        imageVector = presetUiModel.icon,
+        contentDescription = presetUiModel.name,
         onClick = { onClick(presetUiModel.name) },
         colors = colors
-    ) {
-        Icon(presetUiModel.icon, presetUiModel.name)
-    }
+    )
 }
 
 @Preview
@@ -132,7 +132,7 @@ fun PresetsPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_WATCH
 )
 @Composable
-fun MainScreenPreview2Row() {
+fun MainScreenPreview2Rows() {
     FocusPotionTheme {
         MainScreen(uiState = MainScreenContract.UiState(
             firstRow = listOf(
@@ -172,7 +172,7 @@ fun MainScreenPreview1Row() {
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_WATCH
 )
 @Composable
-fun MainScreenPreview1Empty() {
+fun MainScreenPreviewEmpty() {
     FocusPotionTheme {
         MainScreen(uiState = MainScreenContract.UiState()) { }
     }

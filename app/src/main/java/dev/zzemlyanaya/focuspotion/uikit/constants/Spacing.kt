@@ -35,6 +35,7 @@ object Spacing {
     val medium = ConstantSpacing.eight
     val large = ConstantSpacing.ten
     val xLarge = ConstantSpacing.twelve
+    val xxLarge = ConstantSpacing.sixteen
 }
 
 val MaterialTheme.spacing: Spacing

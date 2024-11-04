@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "dev.zzemlyanaya.focuspotion"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.zzemlyanaya.focuspotion"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -42,6 +42,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += arrayOf(
+            "-Xopt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi",
+        )
     }
     buildFeatures {
         compose = true

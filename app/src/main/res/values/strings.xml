@@ -9,4 +9,10 @@
 
     <string name="btn_more">More</string>
     <string name="btn_new">New</string>
+    <string name="btn_create_new">Create new potion</string>
+
+    <string name="potions">Your potions</string>
+    <string name="edit_potion">Edit potion</string>
+    <string name="delete_potion">Delete potion</string>
+    <string name="delete_potion_text">Are you sure you want to delete %s potion?</string>
 </resources>
