@@ -1,6 +1,8 @@
 package dev.zzemlyanaya.focuspotion.app.navigation
 
 import dev.zzemlyanaya.focuspotion.app.data.PresetEntity
+import dev.zzemlyanaya.focuspotion.features.pomodoro.model.TimerArgs
+import dev.zzemlyanaya.focuspotion.features.presets.model.*
 
 object MainDirections {
 
@@ -20,32 +22,28 @@ object MainDirections {
         override val destination = Destination.PresetsList.route
     }
 
-    fun presetEdit(preset: PresetEntity) = object : NavigationCommand() {
+    fun presetEdit(preset: PresetEntity, presetId: Int) = object : NavigationCommand() {
         override val destination = Destination.PresetEdit.route
-        override val args = listOf(false, preset)
+        override val args = listOf(NewPresetArgs(isEditMode = true, presetId, preset))
     }
 
     val presetNew = object : NavigationCommand() {
         override val destination = Destination.PresetEdit.route
-        override val args = listOf(true)
+        override val args = listOf(NewPresetArgs())
     }
 
-    fun editName(currentName: String) = object : NavigationCommand() {
-        override val destination = Destination.PresetNameEdit.route
-        override val args = listOf(currentName)
-    }
-
-    val pickIcon = object : NavigationCommand() {
+    fun pickIcon(current: Int) = object : NavigationCommand() {
         override val destination = Destination.IconPicker.route
+        override val args = listOf(IconPickerArgs(current))
     }
 
-    fun pickNumber(max: Int) = object : NavigationCommand() {
+    fun pickNumber(args: NumberPickerArgs) = object : NavigationCommand() {
         override val destination = Destination.NumberPicker.route
-        override val args = listOf(max)
+        override val args = listOf(args)
     }
 
     fun timer(preset: PresetEntity) = object : NavigationCommand() {
         override val destination = Destination.Timer.route
-        override val args: List<PresetEntity> = listOf(preset)
+        override val args = listOf(TimerArgs(preset))
     }
 }

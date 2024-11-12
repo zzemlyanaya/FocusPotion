@@ -1,9 +1,6 @@
-package dev.zzemlyanaya.focuspotion.uikit.constants
+package dev.zzemlyanaya.focuspotion.uikit.tokens
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.MaterialTheme

@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.features.presets.model
+package dev.zzemlyanaya.focuspotion.features.presets.model.contract
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,7 +22,6 @@ sealed interface NewPresetContract {
     )
 
     sealed interface Intent : BaseIntent {
-        object NameClick : Intent
         object IconClick : Intent
         object FocusClick : Intent
         object ShortBreakClick : Intent
@@ -33,5 +32,6 @@ sealed interface NewPresetContract {
         object SavePresetClick : Intent
 
         class RepeatSwitch(val isOn: Boolean) : Intent
+        class NameEdit(val newName: String) : Intent
     }
 }

@@ -21,6 +21,7 @@
 
     <string name="potion_name">Potion name</string>
     <string name="icon">Icon</string>
+    <string name="pick_icon">Pick an icon</string>
     <string name="focus_for">Focus for</string>
     <string name="short_break">Short break</string>
     <string name="long_break">Long break</string>

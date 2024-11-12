@@ -1,4 +1,4 @@
-package dev.zzemlyanaya.focuspotion.uikit.constants
+package dev.zzemlyanaya.focuspotion.uikit.tokens
 
 import androidx.compose.ui.graphics.Color
 import androidx.wear.compose.material.Colors

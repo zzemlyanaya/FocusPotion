@@ -1,6 +1,7 @@
-package dev.zzemlyanaya.focuspotion.features.presets.model
+package dev.zzemlyanaya.focuspotion.features.presets.model.contract
 
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
+import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
 
 sealed interface PresetsListContract {
 

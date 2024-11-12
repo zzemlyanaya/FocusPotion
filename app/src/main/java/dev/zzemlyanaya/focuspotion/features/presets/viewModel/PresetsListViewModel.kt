@@ -11,11 +11,8 @@ import dev.zzemlyanaya.focuspotion.core.contract.ScreenUiState
 import dev.zzemlyanaya.focuspotion.core.viewModel.BaseViewModel
 import dev.zzemlyanaya.focuspotion.features.presets.mapping.UserPresetsUiMapper
 import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
-import dev.zzemlyanaya.focuspotion.features.presets.model.PresetsListContract
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import dev.zzemlyanaya.focuspotion.features.presets.model.contract.PresetsListContract
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,8 +65,9 @@ class PresetsListViewModel @Inject constructor(
     }
 
     private fun editPreset(name: String) {
-        val preset = presets.find { it.name == name } ?: return
-        router.navigateTo(MainDirections.presetEdit(preset))
+        val presetId = presets.indexOfFirst { it.name == name }
+        if (presetId == -1) return
+        router.navigateTo(MainDirections.presetEdit(presets[presetId], presetId))
     }
 
     private fun deletePreset(name: String) {
@@ -87,6 +85,10 @@ class PresetsListViewModel @Inject constructor(
     }
 
     private fun saveCurrentPresets() {
-        viewModelScope.launch(Dispatchers.IO) { presetsRepository.savePresets(presets) }
+        ioScope.launch { presetsRepository.savePresets(presets) }
+    }
+
+    override fun handleException(e: Throwable) {
+        // TODO
     }
 }

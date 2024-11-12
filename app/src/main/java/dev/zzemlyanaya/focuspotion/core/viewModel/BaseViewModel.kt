@@ -6,14 +6,9 @@ import androidx.lifecycle.viewModelScope
 import dev.zzemlyanaya.focuspotion.app.navigation.NavigationRouter
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.contract.ScreenUiState
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
+import kotlinx.coroutines.flow.*
 
 abstract class BaseViewModel<UiState, UiIntent : BaseIntent>(
     private val router: NavigationRouter
@@ -22,7 +17,8 @@ abstract class BaseViewModel<UiState, UiIntent : BaseIntent>(
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         handleException(exception)
     }
-    protected val ioScope = viewModelScope + Dispatchers.IO + coroutineExceptionHandler
+    private val supervisorJob = SupervisorJob()
+    protected val ioScope = viewModelScope + Dispatchers.IO + supervisorJob + coroutineExceptionHandler
 
     private val intentChannel = Channel<BaseIntent>(Channel.UNLIMITED)
 

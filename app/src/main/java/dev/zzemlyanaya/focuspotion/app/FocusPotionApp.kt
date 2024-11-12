@@ -7,15 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
-import androidx.wear.compose.navigation.SwipeDismissableNavHost
-import androidx.wear.compose.navigation.composable
-import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import androidx.wear.compose.navigation.*
 import com.google.android.horologist.compose.layout.AppScaffold
-import dev.zzemlyanaya.focuspotion.app.navigation.Destination
-import dev.zzemlyanaya.focuspotion.app.navigation.MainDirections
-import dev.zzemlyanaya.focuspotion.app.navigation.NavigationRouter
+import dev.zzemlyanaya.focuspotion.app.navigation.*
 import dev.zzemlyanaya.focuspotion.features.mainScreen.view.MainScreen
-import dev.zzemlyanaya.focuspotion.features.presets.view.PresetsListScreen
+import dev.zzemlyanaya.focuspotion.features.presets.view.*
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
 import kotlinx.coroutines.flow.collectLatest
 
@@ -69,7 +65,17 @@ fun AppNavGraph(
 
         composable(Destination.PresetEdit.route) {
             BackHandler(true, onBack)
-            // PresetEditScreen(modifier = modifier)
+            NewPresetScreen(modifier = modifier)
+        }
+
+        composable(Destination.IconPicker.route) {
+            BackHandler(true, onBack)
+            IconPickerScreen(modifier = modifier)
+        }
+
+        composable(Destination.NumberPicker.route) {
+            BackHandler(true, onBack)
+            NumberPickerScreen(modifier = modifier)
         }
 
         composable(Destination.Timer.route) {

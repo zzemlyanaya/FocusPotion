@@ -1,10 +1,11 @@
 package dev.zzemlyanaya.focuspotion.features.presets.view
 
+import android.app.RemoteInput
 import android.content.res.Configuration
+import android.view.inputmethod.EditorInfo
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,28 +17,28 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TitleCard
+import androidx.wear.input.RemoteInputIntentHelper
+import androidx.wear.input.wearableExtender
 import androidx.wear.tooling.preview.devices.WearDevices
-import com.google.android.horologist.compose.layout.ScalingLazyColumn
-import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
+import com.google.android.horologist.compose.layout.*
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults.ItemType
-import com.google.android.horologist.compose.layout.ScreenScaffold
-import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.compose.material.*
 import com.google.android.horologist.compose.material.Card
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import dev.zzemlyanaya.focuspotion.R
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.ui.BaseScreen
-import dev.zzemlyanaya.focuspotion.features.presets.model.NewPresetContract
+import dev.zzemlyanaya.focuspotion.features.presets.model.contract.NewPresetContract
 import dev.zzemlyanaya.focuspotion.features.presets.viewModel.NewPresetViewModel
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
-import dev.zzemlyanaya.focuspotion.uikit.constants.LocalSpacing
+import dev.zzemlyanaya.focuspotion.uikit.components.ControlButtons
+import dev.zzemlyanaya.focuspotion.uikit.tokens.LocalSpacing
 
+const val NAME_INPUT = "name"
 
 @Composable
 fun NewPresetScreen(modifier: Modifier = Modifier) {
@@ -69,6 +70,29 @@ private fun NewPresetScreen(
         )
     )
 
+    val remoteInputs: List<RemoteInput> = listOf(
+        RemoteInput.Builder(NAME_INPUT)
+            .setLabel(stringResource(id = R.string.potion_name))
+            .wearableExtender {
+                setEmojisAllowed(false)
+                setInputActionType(EditorInfo.IME_ACTION_DONE)
+            }.build(),
+    )
+
+    val nameInputLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        it.data?.let { data ->
+           RemoteInput.getResultsFromIntent(data)
+               ?.getCharSequence(NAME_INPUT)
+               ?.toString()
+               ?.let { sendIntent.invoke(NewPresetContract.Intent.NameEdit(it)) }
+        }
+    }
+
+    val nameInputIntent = RemoteInputIntentHelper.createActionRemoteInputIntent()
+    RemoteInputIntentHelper.putRemoteInputsExtra(nameInputIntent, remoteInputs)
+
     ScreenScaffold(
         modifier = modifier.fillMaxSize(),
         scrollState = columnState
@@ -80,7 +104,7 @@ private fun NewPresetScreen(
                 }
             }
 
-            item { NameCard(uiState.name) { sendIntent.invoke(NewPresetContract.Intent.NameClick) } }
+            item { NameCard(uiState.name) { nameInputLauncher.launch(nameInputIntent) } }
 
             item { SettingsCard(uiState, sendIntent) }
 
@@ -88,6 +112,7 @@ private fun NewPresetScreen(
 
             item {
                 ControlButtons(
+                    modifier = Modifier.padding(top = LocalSpacing.current.xLarge),
                     onCancel = { sendIntent.invoke(NewPresetContract.Intent.CancelClick) },
                     onSave = { sendIntent.invoke(NewPresetContract.Intent.SavePresetClick) }
                 )
@@ -190,31 +215,7 @@ private fun NameCard(name: String, onClick: () -> Unit) {
     }
 }
 
-@Composable
-private fun ControlButtons(onCancel: () -> Unit, onSave: () -> Unit) {
-    val (spacedBy, buttonWidth) = responsiveButtonWidth(2)
 
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(top = LocalSpacing.current.xLarge),
-        horizontalArrangement = Arrangement.spacedBy(spacedBy, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ResponsiveButton(
-            icon = Icons.Default.Close,
-            contentDescription = Icons.Default.Close.name,
-            onClick = onCancel,
-            buttonWidth = buttonWidth,
-            colors = ChipDefaults.secondaryChipColors(),
-        )
-
-        ResponsiveButton(
-            icon = Icons.Default.Check,
-            contentDescription = Icons.Default.Check.name,
-            onClick = onSave,
-            buttonWidth = buttonWidth
-        )
-    }
-}
 
 @Preview
 @Composable

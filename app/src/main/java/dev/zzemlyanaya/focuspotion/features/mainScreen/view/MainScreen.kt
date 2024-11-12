@@ -1,16 +1,9 @@
 package dev.zzemlyanaya.focuspotion.features.mainScreen.view
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,9 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import androidx.wear.tooling.preview.devices.WearDevices
 import com.google.android.horologist.compose.material.Button
 import com.google.android.horologist.compose.material.CompactChip
@@ -31,7 +22,7 @@ import dev.zzemlyanaya.focuspotion.features.mainScreen.model.MainScreenContract
 import dev.zzemlyanaya.focuspotion.features.mainScreen.viewModel.MainScreenViewModel
 import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
-import dev.zzemlyanaya.focuspotion.uikit.constants.LocalSpacing
+import dev.zzemlyanaya.focuspotion.uikit.tokens.LocalSpacing
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {

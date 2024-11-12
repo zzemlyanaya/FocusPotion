@@ -2,44 +2,23 @@ package dev.zzemlyanaya.focuspotion.features.presets.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.wear.compose.foundation.ExperimentalWearFoundationApi
-import androidx.wear.compose.foundation.RevealScope
-import androidx.wear.compose.foundation.RevealState
-import androidx.wear.compose.foundation.SwipeToReveal
+import androidx.wear.compose.foundation.*
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.foundation.rememberRevealState
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.ExperimentalWearMaterialApi
-import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.SwipeToRevealDefaults
-import androidx.wear.compose.material.SwipeToRevealPrimaryAction
-import androidx.wear.compose.material.SwipeToRevealSecondaryAction
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import androidx.wear.tooling.preview.devices.WearDevices
-import com.google.android.horologist.compose.layout.ScalingLazyColumn
+import com.google.android.horologist.compose.layout.*
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults.ItemType
-import com.google.android.horologist.compose.layout.ScreenScaffold
-import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.compose.material.Chip
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
@@ -48,10 +27,10 @@ import dev.zzemlyanaya.focuspotion.R
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.ui.BaseScreen
 import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
-import dev.zzemlyanaya.focuspotion.features.presets.model.PresetsListContract
+import dev.zzemlyanaya.focuspotion.features.presets.model.contract.PresetsListContract
 import dev.zzemlyanaya.focuspotion.features.presets.viewModel.PresetsListViewModel
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
-import dev.zzemlyanaya.focuspotion.uikit.constants.LocalSpacing
+import dev.zzemlyanaya.focuspotion.uikit.tokens.LocalSpacing
 
 
 @Composable
@@ -103,7 +82,7 @@ private fun PresetsListScreen(
                     )
                 }
             } else {
-                items(uiState.presets) {
+                items(uiState.presets, key = { it.name }) {
                     PresetCard(it, sendIntent)
                 }
             }
