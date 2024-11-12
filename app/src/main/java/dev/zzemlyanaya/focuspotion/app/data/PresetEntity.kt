@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class PresetEntity(
-    val name: String,
-    val iconId: Int,
-    val focusTime: Int,
-    val shortBreakTime: Int,
-    val sessions: Int,
-    val repeatAfterLongBreak: Boolean,
-    val longBreakTime: Int,
+    var name: String,
+    var iconId: Int,
+    var focusTime: Int,
+    var shortBreakTime: Int,
+    var sessions: Int,
+    var repeatAfterLongBreak: Boolean,
+    var longBreakTime: Int,
 )

@@ -30,6 +30,20 @@ object MainDirections {
         override val args = listOf(true)
     }
 
+    fun editName(currentName: String) = object : NavigationCommand() {
+        override val destination = Destination.PresetNameEdit.route
+        override val args = listOf(currentName)
+    }
+
+    val pickIcon = object : NavigationCommand() {
+        override val destination = Destination.IconPicker.route
+    }
+
+    fun pickNumber(max: Int) = object : NavigationCommand() {
+        override val destination = Destination.NumberPicker.route
+        override val args = listOf(max)
+    }
+
     fun timer(preset: PresetEntity) = object : NavigationCommand() {
         override val destination = Destination.Timer.route
         override val args: List<PresetEntity> = listOf(preset)

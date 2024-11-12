@@ -5,7 +5,18 @@ import androidx.compose.runtime.Immutable
 @Immutable
 object AppIcons
 
-// TODO add all available icons for choosing
 fun AppIcons.all() = listOf(
-    AppIcons.More
+    AppIcons.Potion,
+    AppIcons.Magic,
+    AppIcons.Star,
+    AppIcons.Heart,
+    AppIcons.Timer,
+    AppIcons.Books,
+    AppIcons.Write,
+    AppIcons.Language,
+    AppIcons.Code,
+    AppIcons.Laptop,
+    AppIcons.Briefcase,
+    AppIcons.Web,
+    AppIcons.Gym,
 )

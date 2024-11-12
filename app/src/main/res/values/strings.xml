@@ -15,6 +15,17 @@
 
     <string name="potions">Your potions</string>
     <string name="edit_potion">Edit potion</string>
+    <string name="new_potion">New potion</string>
     <string name="delete_potion">Delete potion</string>
     <string name="delete_potion_text">Are you sure you want to delete %s potion?</string>
+
+    <string name="potion_name">Potion name</string>
+    <string name="icon">Icon</string>
+    <string name="focus_for">Focus for</string>
+    <string name="short_break">Short break</string>
+    <string name="long_break">Long break</string>
+    <string name="sessions">Sessions</string>
+    <string name="repeat_after">Repeat after long break</string>
+    <string name="min_text">%s min</string>
+    <string name="min_watch">%d:00</string>
 </resources>

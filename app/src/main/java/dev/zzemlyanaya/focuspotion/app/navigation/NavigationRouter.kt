@@ -11,7 +11,7 @@ class NavigationRouter {
     private val _commands = MutableStateFlow(default)
     val commands: Flow<NavigationCommand> = _commands
 
-    private val resultListeners: HashMap<Int, ResultListener> = hashMapOf()
+    private val resultListeners: HashMap<String, ResultListener> = hashMapOf()
 
     @Suppress("UNCHECKED_CAST")
     fun <T> getCurrentArgs() = _commands.value.args.firstOrNull() as? T
@@ -25,7 +25,7 @@ class NavigationRouter {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> addResultListener(id: Int, listener: (T) -> Unit) {
+    fun <T> addResultListener(id: String, listener: (T) -> Unit) {
         resultListeners[id] = object : ResultListener {
             override fun onResult(result: Any) {
                 (result as? T)?.let { listener(it) }
@@ -33,11 +33,11 @@ class NavigationRouter {
         }
     }
 
-    fun removeResultListener(id: Int) {
+    fun removeResultListener(id: String) {
         resultListeners.remove(id)
     }
 
-    fun sendResult(id: Int, result: Any) {
+    fun sendResult(id: String, result: Any) {
         resultListeners[id]?.onResult(result)
     }
 
