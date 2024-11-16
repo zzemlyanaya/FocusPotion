@@ -19,8 +19,9 @@ class NumberPickerViewModel @Inject constructor(
     init {
         router.getCurrentArgs<NumberPickerArgs>()?.let { args ->
             updateScreenState { it.copy(
+                title = args.title,
                 range = (1..args.max).map { it.toString() },
-                scrollToCurrent = args.current
+                scrollToCurrent = args.current-1
             ) }
         }
     }

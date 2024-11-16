@@ -11,13 +11,14 @@ import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.viewModel.BaseViewModel
 import dev.zzemlyanaya.focuspotion.features.presets.PresetDefaults
 import dev.zzemlyanaya.focuspotion.features.presets.model.NewPresetArgs
+import dev.zzemlyanaya.focuspotion.features.presets.model.NumberPickerArgs
 import dev.zzemlyanaya.focuspotion.features.presets.model.contract.NewPresetContract
 import dev.zzemlyanaya.focuspotion.features.presets.viewModel.IconPickerViewModel.Companion.ICON_SELECTED_RESULT
+import dev.zzemlyanaya.focuspotion.features.presets.viewModel.NumberPickerViewModel.Companion.NUMBER_SELECTED_RESULT
 import dev.zzemlyanaya.focuspotion.uikit.icons.AppIcons
 import dev.zzemlyanaya.focuspotion.uikit.icons.all
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,6 +39,8 @@ class NewPresetViewModel @Inject constructor(
         )
 
     init {
+        viewModelScope.launch { presets.collect() }
+
         val args = router.getCurrentArgs<NewPresetArgs>()
         isEditMode = args?.isEditMode ?: false
         editingId = args?.editingId ?: -1
@@ -75,15 +78,16 @@ class NewPresetViewModel @Inject constructor(
     override fun handleIntent(intent: BaseIntent) {
         when(intent) {
             is NewPresetContract.Intent.IconClick -> onOpenIconPicker()
-            is NewPresetContract.Intent.FocusClick -> {}
-            is NewPresetContract.Intent.ShortBreakClick -> {}
-            is NewPresetContract.Intent.LongBreakClick -> {}
-            is NewPresetContract.Intent.SessionsClick -> {}
+            is NewPresetContract.Intent.FocusClick -> onOpenFocusPicker()
+            is NewPresetContract.Intent.ShortBreakClick -> onOpenShortBreakPicker()
+            is NewPresetContract.Intent.LongBreakClick -> onOpenLongBreakPicker()
+            is NewPresetContract.Intent.SessionsClick -> onOpenSessionsPicker()
 
             is NewPresetContract.Intent.CancelClick -> router.back()
             is NewPresetContract.Intent.SavePresetClick -> onSavePreset()
 
             is NewPresetContract.Intent.NameEdit -> {
+                // TODO check name
                 currentPreset?.name = intent.newName
                 updateScreenState { it.copy(name = intent.newName) }
             }
@@ -103,26 +107,81 @@ class NewPresetViewModel @Inject constructor(
         router.navigateTo(MainDirections.pickIcon(currentPreset?.iconId ?: 0))
     }
 
+    private fun onOpenFocusPicker() {
+        router.addResultListener<Int>(NUMBER_SELECTED_RESULT) { selected ->
+            currentPreset?.focusTime = selected
+            updateScreenState { it.copy(focusTime = selected) }
+        }
+        router.navigateTo(MainDirections.pickNumber(
+            NumberPickerArgs(
+                title = R.string.focus_for,
+                max = PresetDefaults.MAX_INTERVAL,
+                current = currentPreset?.focusTime ?: PresetDefaults.FOCUS
+            )
+        ))
+    }
+
+    private fun onOpenShortBreakPicker() {
+        router.addResultListener<Int>(NUMBER_SELECTED_RESULT) { selected ->
+            currentPreset?.shortBreakTime = selected
+            updateScreenState { it.copy(shortBreak = selected) }
+        }
+        router.navigateTo(MainDirections.pickNumber(
+            NumberPickerArgs(
+                title = R.string.short_break,
+                max = PresetDefaults.MAX_INTERVAL,
+                current = currentPreset?.shortBreakTime ?: PresetDefaults.SHORT_BREAK
+            )
+        ))
+    }
+
+    private fun onOpenLongBreakPicker() {
+        router.addResultListener<Int>(NUMBER_SELECTED_RESULT) { selected ->
+            currentPreset?.longBreakTime = selected
+            updateScreenState { it.copy(longBreak = selected) }
+        }
+        router.navigateTo(MainDirections.pickNumber(
+            NumberPickerArgs(
+                title = R.string.long_break,
+                max = PresetDefaults.MAX_INTERVAL,
+                current = currentPreset?.longBreakTime ?: PresetDefaults.LONG_BREAK
+            )
+        ))
+    }
+
+    private fun onOpenSessionsPicker() {
+        router.addResultListener<Int>(NUMBER_SELECTED_RESULT) { selected ->
+            currentPreset?.sessions = selected
+            updateScreenState { it.copy(sessions = selected.toString()) }
+        }
+        router.navigateTo(MainDirections.pickNumber(
+            NumberPickerArgs(
+                title = R.string.sessions,
+                max = PresetDefaults.MAX_SESSIONS,
+                current = currentPreset?.sessions ?: PresetDefaults.SESSIONS
+            )
+        ))
+    }
+
+    // TODO doesn't work as intended half of the times
     private fun onSavePreset() {
         val preset = currentPreset ?: return
+        // TODO show loading
+        if (isEditMode) presets.value[editingId].apply {
+            name = preset.name
+            iconId = preset.iconId
+            focusTime = preset.focusTime
+            shortBreakTime = preset.shortBreakTime
+            longBreakTime = preset.longBreakTime
+            sessions = preset.sessions
+            repeatAfterLongBreak = preset.repeatAfterLongBreak
+        }
+
+        val forSave = if (isEditMode) presets.value else { presets.value + preset }
 
         ioScope.launch {
-            repository.savePresets(
-                if (isEditMode) {
-                    presets.value[editingId].apply {
-                        name = preset.name
-                        iconId = preset.iconId
-                        focusTime = preset.focusTime
-                        shortBreakTime = preset.shortBreakTime
-                        longBreakTime = preset.longBreakTime
-                        sessions = preset.sessions
-                        repeatAfterLongBreak = preset.repeatAfterLongBreak
-                    }
-                    presets.value
-                } else {
-                    presets.value + preset
-                }
-            )
+            repository.savePresets(forSave)
+            withContext(Dispatchers.Main) { router.back() }
         }
     }
 

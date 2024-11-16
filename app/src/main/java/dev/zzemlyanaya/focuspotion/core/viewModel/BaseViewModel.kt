@@ -15,6 +15,7 @@ abstract class BaseViewModel<UiState, UiIntent : BaseIntent>(
 ): ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        exception.printStackTrace()
         handleException(exception)
     }
     private val supervisorJob = SupervisorJob()
@@ -52,9 +53,7 @@ abstract class BaseViewModel<UiState, UiIntent : BaseIntent>(
 
     protected fun getScreenState(): UiState = _screenState.value.state
 
-    protected open fun handleException(e: Throwable) {
-        e.printStackTrace()
-    }
+    protected open fun handleException(e: Throwable) {}
 
     protected open fun back() {
         router.back()

@@ -82,6 +82,8 @@ class PresetsListViewModel @Inject constructor(
             presets.add(deleteIndex, it)
             saveCurrentPresets()
         }
+        deletedPreset = null
+        deleteIndex = -1
     }
 
     private fun saveCurrentPresets() {

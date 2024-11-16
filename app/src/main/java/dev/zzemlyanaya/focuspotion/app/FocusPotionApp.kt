@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
@@ -25,7 +26,7 @@ fun FocusPotionApp(navigationRouter: NavigationRouter) {
 
             LaunchedEffect(true) {
                 navigationRouter.commands
-                    .flowWithLifecycle(lifecycle)
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
                     .collectLatest { nextCommand ->
                         if (nextCommand.destination == MainDirections.back.destination) {
                             navController.popBackStack()

@@ -1,9 +1,9 @@
 package dev.zzemlyanaya.focuspotion.features.presets.mapping
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import dev.zzemlyanaya.focuspotion.app.data.PresetEntity
 import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
+import dev.zzemlyanaya.focuspotion.uikit.icons.AppIcons
+import dev.zzemlyanaya.focuspotion.uikit.icons.all
 import javax.inject.Inject
 
 class UserPresetsUiMapper @Inject constructor() {
@@ -13,6 +13,6 @@ class UserPresetsUiMapper @Inject constructor() {
     private fun map(entity: PresetEntity) =
         PresetUiModel(
             name = entity.name,
-            icon = Icons.Filled.Favorite,
+            icon = AppIcons.all()[entity.iconId],
         )
 }
