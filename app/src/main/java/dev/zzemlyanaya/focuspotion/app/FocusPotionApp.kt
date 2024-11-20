@@ -12,6 +12,7 @@ import androidx.wear.compose.navigation.*
 import com.google.android.horologist.compose.layout.AppScaffold
 import dev.zzemlyanaya.focuspotion.app.navigation.*
 import dev.zzemlyanaya.focuspotion.features.mainScreen.view.MainScreen
+import dev.zzemlyanaya.focuspotion.features.pomodoro.view.TimerScreen
 import dev.zzemlyanaya.focuspotion.features.presets.view.*
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
 import kotlinx.coroutines.flow.collectLatest
@@ -81,7 +82,7 @@ fun AppNavGraph(
 
         composable(Destination.Timer.route) {
             BackHandler(true, onBack)
-            // TimerScreen(modifier = modifier)
+             TimerScreen(modifier = modifier)
         }
     }
 }

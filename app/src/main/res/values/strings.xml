@@ -29,4 +29,6 @@
     <string name="repeat_after">Repeat after long break</string>
     <string name="min_text">%s min</string>
     <string name="min_watch">%d:00</string>
+
+    <string name="sessions_progress">%d out of %d</string>
 </resources>

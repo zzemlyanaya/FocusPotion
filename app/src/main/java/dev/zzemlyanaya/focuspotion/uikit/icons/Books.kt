@@ -2,9 +2,7 @@ package dev.zzemlyanaya.focuspotion.uikit.icons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.group
-import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.graphics.vector.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
@@ -25,8 +23,8 @@ val AppIcons.Books: ImageVector
         }
         _Books = ImageVector.Builder(
             name = "Books",
-            defaultWidth = 16.933333.dp,
-            defaultHeight = 16.933334.dp,
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
             viewportWidth = 16.933333f,
             viewportHeight = 16.933334f
         ).apply {
