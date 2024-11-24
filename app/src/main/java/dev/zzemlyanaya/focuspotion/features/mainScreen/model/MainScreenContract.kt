@@ -1,7 +1,7 @@
 package dev.zzemlyanaya.focuspotion.features.mainScreen.model
 
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
-import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
+import dev.zzemlyanaya.focuspotion.features.presets.impl.model.PresetUiModel
 
 sealed interface MainScreenContract {
 

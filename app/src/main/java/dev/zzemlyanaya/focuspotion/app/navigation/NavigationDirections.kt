@@ -1,8 +1,8 @@
 package dev.zzemlyanaya.focuspotion.app.navigation
 
-import dev.zzemlyanaya.focuspotion.app.data.PresetEntity
-import dev.zzemlyanaya.focuspotion.features.pomodoro.model.TimerArgs
-import dev.zzemlyanaya.focuspotion.features.presets.model.*
+import dev.zzemlyanaya.focuspotion.features.pomodoro.impl.model.TimerArgs
+import dev.zzemlyanaya.focuspotion.features.presets.api.model.PresetEntity
+import dev.zzemlyanaya.focuspotion.features.presets.impl.model.*
 
 object MainDirections {
 

@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.play.services.wearable)
     implementation(libs.datastore)
     implementation(libs.serialization.json)
+    implementation(libs.accompanist.permissions)
 
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.compiler)

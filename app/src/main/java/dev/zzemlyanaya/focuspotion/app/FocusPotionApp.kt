@@ -12,14 +12,18 @@ import androidx.wear.compose.navigation.*
 import com.google.android.horologist.compose.layout.AppScaffold
 import dev.zzemlyanaya.focuspotion.app.navigation.*
 import dev.zzemlyanaya.focuspotion.features.mainScreen.view.MainScreen
-import dev.zzemlyanaya.focuspotion.features.pomodoro.view.TimerScreen
-import dev.zzemlyanaya.focuspotion.features.presets.view.*
+import dev.zzemlyanaya.focuspotion.features.pomodoro.api.service.TimerListener
+import dev.zzemlyanaya.focuspotion.features.pomodoro.impl.view.TimerScreen
+import dev.zzemlyanaya.focuspotion.features.presets.impl.view.*
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
 import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
-fun FocusPotionApp(navigationRouter: NavigationRouter) {
+fun FocusPotionApp(
+    navigationRouter: NavigationRouter,
+    timerListener: () -> TimerListener?,
+) {
     FocusPotionTheme {
         AppScaffold {
             val navController = rememberSwipeDismissableNavController()
@@ -37,7 +41,7 @@ fun FocusPotionApp(navigationRouter: NavigationRouter) {
                     }
             }
 
-            AppNavGraph(navController, onBack = navigationRouter::back)
+            AppNavGraph(navController, timerListener, onBack = navigationRouter::back)
         }
     }
 }
@@ -45,6 +49,7 @@ fun FocusPotionApp(navigationRouter: NavigationRouter) {
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
+    timerListener: () -> TimerListener?,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = Destination.Main.route,
@@ -82,7 +87,7 @@ fun AppNavGraph(
 
         composable(Destination.Timer.route) {
             BackHandler(true, onBack)
-             TimerScreen(modifier = modifier)
+            TimerScreen(modifier = modifier, timerListener = timerListener())
         }
     }
 }

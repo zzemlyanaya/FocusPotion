@@ -2,19 +2,17 @@ package dev.zzemlyanaya.focuspotion.features.mainScreen.viewModel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.zzemlyanaya.focuspotion.app.data.PresetEntity
-import dev.zzemlyanaya.focuspotion.app.data.UserPresetsRepository
 import dev.zzemlyanaya.focuspotion.app.navigation.MainDirections
 import dev.zzemlyanaya.focuspotion.app.navigation.NavigationRouter
 import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.contract.ScreenUiState
 import dev.zzemlyanaya.focuspotion.core.viewModel.BaseViewModel
 import dev.zzemlyanaya.focuspotion.features.mainScreen.model.MainScreenContract
-import dev.zzemlyanaya.focuspotion.features.presets.mapping.UserPresetsUiMapper
-import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import dev.zzemlyanaya.focuspotion.features.presets.api.data.UserPresetsRepository
+import dev.zzemlyanaya.focuspotion.features.presets.api.model.PresetEntity
+import dev.zzemlyanaya.focuspotion.features.presets.impl.mapping.UserPresetsUiMapper
+import dev.zzemlyanaya.focuspotion.features.presets.impl.model.PresetUiModel
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel

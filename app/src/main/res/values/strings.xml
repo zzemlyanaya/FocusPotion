@@ -31,4 +31,13 @@
     <string name="min_watch">%d:00</string>
 
     <string name="sessions_progress">%d out of %d</string>
+    <string name="long_rest_subtitle">Longer rest for now</string>
+    <string name="finished_title">Done! Did you brew something nice?</string>
+    <string name="finished_button">Yep</string>
+
+    <string name="notification_text">It\'s time to brew!</string>
+    <string name="notification_title">Brewing something…</string>
+
+    <string name="launch_app">Launch app</string>
+    <string name="stop">Stop</string>
 </resources>

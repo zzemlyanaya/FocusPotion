@@ -20,7 +20,7 @@ import dev.zzemlyanaya.focuspotion.core.contract.BaseIntent
 import dev.zzemlyanaya.focuspotion.core.ui.BaseScreen
 import dev.zzemlyanaya.focuspotion.features.mainScreen.model.MainScreenContract
 import dev.zzemlyanaya.focuspotion.features.mainScreen.viewModel.MainScreenViewModel
-import dev.zzemlyanaya.focuspotion.features.presets.model.PresetUiModel
+import dev.zzemlyanaya.focuspotion.features.presets.impl.model.PresetUiModel
 import dev.zzemlyanaya.focuspotion.uikit.FocusPotionTheme
 import dev.zzemlyanaya.focuspotion.uikit.tokens.LocalSpacing
 

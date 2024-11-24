@@ -1,9 +1,9 @@
 package dev.zzemlyanaya.focuspotion.uikit.tokens
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.MaterialTheme
 
 val LocalSpacing = staticCompositionLocalOf<Spacing> { error("Spacing wasn't provided") }
 
@@ -34,8 +34,3 @@ object Spacing {
     val xLarge = ConstantSpacing.twelve
     val xxLarge = ConstantSpacing.sixteen
 }
-
-val MaterialTheme.spacing: Spacing
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalSpacing.current
