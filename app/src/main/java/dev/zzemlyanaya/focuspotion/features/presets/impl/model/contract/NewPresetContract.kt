@@ -12,6 +12,7 @@ sealed interface NewPresetContract {
 
     data class UiState(
         @StringRes val title: Int = R.string.edit_potion,
+        @StringRes val nameError: Int? = null,
         val name: String = PresetDefaults.NAME,
         val icon: ImageVector = AppIcons.Potion,
         val focusTime: Int = PresetDefaults.FOCUS,

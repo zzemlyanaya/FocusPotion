@@ -15,9 +15,6 @@ class TimerRepository @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 
-//    private val storedState: Flow<TimerEntity> = dataStore.data.map {
-//        Json.decodeFromString(it[TIMER_STATE_KEY] ?: "{}") ?: DEFAULT_TIMER
-//    }
     private val mutableState = MutableStateFlow(DEFAULT_TIMER)
 
     val timerState: Flow<TimerEntity> = mutableState.asStateFlow()
@@ -28,12 +25,6 @@ class TimerRepository @Inject constructor(
 
 
     suspend fun setIsTimerActive(isActive: Boolean) = dataStore.edit { it[ACTIVE_TIMER_KEY] = isActive }
-
-//    suspend fun saveTimerState(state: TimerEntity) {
-//        dataStore.edit {
-//            it[TIMER_STATE_KEY] = Json.encodeToString(state)
-//        }
-//    }
 
     fun reset(presetEntity: PresetEntity) {
         mutableState.value = presetEntity.toDataState()
@@ -117,6 +108,5 @@ class TimerRepository @Inject constructor(
 
     companion object {
         private val ACTIVE_TIMER_KEY = booleanPreferencesKey("active_timer")
-        private val TIMER_STATE_KEY = stringPreferencesKey("timer_state")
     }
 }

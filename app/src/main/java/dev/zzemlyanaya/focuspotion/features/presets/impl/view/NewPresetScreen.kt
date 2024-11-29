@@ -106,6 +106,16 @@ private fun NewPresetScreen(
 
             item { NameCard(uiState.name) { nameInputLauncher.launch(nameInputIntent) } }
 
+            uiState.nameError?.let {
+                item {
+                    Text(
+                        stringResource(it),
+                        style = MaterialTheme.typography.caption2,
+                        color = MaterialTheme.colors.error
+                    )
+                }
+            }
+
             item { SettingsCard(uiState, sendIntent) }
 
             item { LongBreakCard(uiState, sendIntent) }
@@ -251,6 +261,6 @@ private fun SettingsCardPreview() {
 @Composable
 fun NewPresetScreenPreview() {
     FocusPotionTheme {
-        NewPresetScreen(uiState = NewPresetContract.UiState()) { }
+        NewPresetScreen(uiState = NewPresetContract.UiState(nameError = R.string.name_cant_be_empty)) { }
     }
 }

@@ -29,6 +29,8 @@
     <string name="repeat_after">Repeat after long break</string>
     <string name="min_text">%s min</string>
     <string name="min_watch">%d:00</string>
+    <string name="name_cant_be_empty">Name can\'t be empty</string>
+    <string name="name_already_exists">Name should be unique</string>
 
     <string name="sessions_progress">%d out of %d</string>
     <string name="long_rest_subtitle">Longer rest for now</string>

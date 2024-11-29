@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.wear.compose.foundation.rememberSwipeToDismissBoxState
 import androidx.wear.compose.navigation.*
 import com.google.android.horologist.compose.layout.AppScaffold
 import dev.zzemlyanaya.focuspotion.app.navigation.*
@@ -54,10 +55,14 @@ fun AppNavGraph(
     modifier: Modifier = Modifier,
     startDestination: String = Destination.Main.route,
 ) {
+    val swipeBoxState = rememberSwipeToDismissBoxState()
+    val navState = rememberSwipeDismissableNavHostState(swipeBoxState)
+
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier
+        state = navState,
+        modifier = modifier,
     ) {
 
         composable(Destination.Main.route) {

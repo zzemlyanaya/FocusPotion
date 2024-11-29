@@ -17,8 +17,8 @@ import dev.zzemlyanaya.focuspotion.features.presets.impl.viewModel.IconPickerVie
 import dev.zzemlyanaya.focuspotion.features.presets.impl.viewModel.NumberPickerViewModel.Companion.NUMBER_SELECTED_RESULT
 import dev.zzemlyanaya.focuspotion.uikit.icons.AppIcons
 import dev.zzemlyanaya.focuspotion.uikit.icons.all
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -86,17 +86,31 @@ class NewPresetViewModel @Inject constructor(
             is NewPresetContract.Intent.CancelClick -> router.back()
             is NewPresetContract.Intent.SavePresetClick -> onSavePreset()
 
-            is NewPresetContract.Intent.NameEdit -> {
-                // TODO check name
-                currentPreset?.name = intent.newName
-                updateScreenState { it.copy(name = intent.newName) }
-            }
+            is NewPresetContract.Intent.NameEdit -> handleName(intent.newName)
             is NewPresetContract.Intent.RepeatSwitch -> {
                 currentPreset?.repeatAfterLongBreak = intent.isOn
                 updateScreenState { it.copy(repeatAfterLongBreak = intent.isOn) }
             }
             else -> super.handleIntent(intent)
         }
+    }
+
+    private fun handleName(name: String) {
+        val error = if (name.isEmpty()) {
+            R.string.name_cant_be_empty
+        } else if (presets.value.any { it.name == name }) {
+            R.string.name_already_exists
+        } else {
+            null
+        }
+
+        error?.let { err ->
+            updateScreenState { it.copy(nameError = err) }
+            return
+        }
+
+        currentPreset?.name = name
+        updateScreenState { it.copy(name = name, nameError = null) }
     }
 
     private fun onOpenIconPicker() {
@@ -163,10 +177,8 @@ class NewPresetViewModel @Inject constructor(
         ))
     }
 
-    // TODO doesn't work as intended half of the times
     private fun onSavePreset() {
         val preset = currentPreset ?: return
-        // TODO show loading
         if (isEditMode) presets.value[editingId].apply {
             name = preset.name
             iconId = preset.iconId
@@ -181,7 +193,7 @@ class NewPresetViewModel @Inject constructor(
 
         ioScope.launch {
             repository.savePresets(forSave)
-            withContext(Dispatchers.Main) { router.back() }
+            router.back()
         }
     }
 

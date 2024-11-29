@@ -1,27 +1,29 @@
 package dev.zzemlyanaya.focuspotion.app.navigation
 
 import dev.zzemlyanaya.focuspotion.app.navigation.MainDirections.back
-import dev.zzemlyanaya.focuspotion.app.navigation.MainDirections.default
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 class NavigationRouter {
 
-    private val _commands = MutableStateFlow(default)
+    private val scope = MainScope()
+
+    private val _commands = MutableSharedFlow<NavigationCommand>(replay = 1)
     val commands: Flow<NavigationCommand> = _commands
 
     private val resultListeners: HashMap<String, ResultListener> = hashMapOf()
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> getCurrentArgs() = _commands.value.args.firstOrNull() as? T
+    fun <T> getCurrentArgs() = _commands.replayCache.first().args.firstOrNull() as? T
 
     fun navigateTo(directions: NavigationCommand) {
-        _commands.update { directions }
+        scope.launch { _commands.emit(directions) }
     }
 
     fun back() {
-        _commands.update { back }
+        scope.launch { _commands.emit(back) }
     }
 
     @Suppress("UNCHECKED_CAST")
